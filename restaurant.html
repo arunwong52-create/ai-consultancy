@@ -41,26 +41,29 @@
       <p>ราคารวม: <strong id="total">0</strong> บาท</p>
       <button onclick="clearCart()">🗑️ ล้างรายการ</button>
     </div>
-
-    <div class="menu-item">
-      <h3>ผัดไทย</h3>
-      <p>80 บาท</p>
-      <button onclick="orderFood('ผัดไทย', 80)">สั่งเลย!</button>
-    </div>
-
-    <div class="menu-item">
-      <h3>ต้มยำกุ้ง</h3>
-      <p>120 บาท</p>
-      <button onclick="orderFood('ต้มยำกุ้ง', 120)">สั่งเลย!</button>
-    </div>
-
-    <div class="menu-item">
-      <h3>ข้าวผัดกะเพรา</h3>
-      <p>60 บาท</p>
-      <button onclick="orderFood('ข้าวผัดกะเพรา', 60)">สั่งเลย!</button>
-    </div>
-
-    <script>
+    <div id="menu-container"></div>
+  <script>
+      let menuItems = [
+    { name: "ส้มตำ", price: 50 },
+    { name: "ผัดไทย", price: 80 },
+    { name: "ต้มยำกุ้ง", price: 120 },
+    { name: "ข้าวผัดกะเพรา", price: 60 }
+];
+function buildMenu() {
+    let container = document.getElementById("menu-container");
+    container.innerHTML = "";
+    
+    for (let i = 0; i < menuItems.length; i++) {
+        let item = menuItems[i];
+        container.innerHTML += `
+            <div class="menu-item">
+                <h3>${item.name}</h3>
+                <p>${item.price} บาท</p>
+                <button onclick="orderFood('${item.name}', ${item.price})">สั่งเลย!</button>
+            </div>
+        `;
+    }
+}
       let totalPrice = 0;
       let orders = [];
 
@@ -80,6 +83,7 @@
         document.getElementById("cart-items").innerText = "ยังไม่มีรายการ";
         document.getElementById("total").innerText = 0;
       }
-    </script>
+buildMenu();
+</script>
   </body>
 </html>
