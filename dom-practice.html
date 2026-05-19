@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1 id="title">ร้านอาหารของพอร์</h1>
+  <p class="menu-item">ข้าวผัด 50 บาท</p>
+  <p class="menu-item">ผัดไทย 60 บาท</p>
+  <button id="changeBtn">เปลี่ยนชื่อร้าน</button>
+
+  <script>
+changeBtn.addEventListener("click", function() {
+    let title = document.querySelector("#title");
+    title.textContent = "Food for you";
+    })
+  </script>
+</body>
+</html>
