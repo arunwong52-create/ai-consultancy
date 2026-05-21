@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Menu</title>
+</head>
+<body>
+
+  <h1>รายการอาหาร</h1>
+
+  <div id="menu"></div>
+
+  <script>
+    let menuItems = [
+      {
+        name: "ข้าวผัดกุ้ง",
+        price: 89,
+        category: "ของคาว"
+      },
+      {
+        name: "บิงซู",
+        price: 129,
+        category: "ของหวาน"
+      },
+      {
+        name: "ชาไทย",
+        price: 45,
+        category: "เครื่องดื่ม"
+      }
+    ]
+
+    let menuDiv = document.getElementById("menu")
+
+    for (let item of menuItems) {
+      menuDiv.innerHTML += `
+        <p>
+            ${item.name} - ${item.price} บาท (${item.category})
+        </p>
+      `
+    }
+  </script>
+
+</body>
+</html>
