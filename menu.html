@@ -9,31 +9,51 @@
 
   <div id="menu"></div>
 
+  <button onclick="addMenu()">
+    เพิ่มเมนู
+  </button>
+
   <script>
     let menuItems = [
-      {
-        name: "ข้าวผัดกุ้ง",
-        price: 89,
-        category: "ของคาว"
-      },
-      {
-        name: "บิงซู",
-        price: 129,
-        category: "ของหวาน"
-      },
-      {
-        name: "ชาไทย",
-        price: 45,
-        category: "เครื่องดื่ม"
-      }
-    ]
+  {
+    name: "ข้าวผัดกุ้ง",
+    price: 89,
+    category: "ของคาว"
+  },
+  {
+    name: "บิงซู",
+    price: 129,
+    category: "ของหวาน"
+  },
+  {
+    name: "ชาไทย",
+    price: 45,
+    category: "เครื่องดื่ม"
+  }
+]
 
     let menuDiv = document.getElementById("menu")
 
     for (let item of menuItems) {
       menuDiv.innerHTML += `
         <p>
-            ${item.name} - ${item.price} บาท (${item.category})
+          ${item.name} - ${item.price} บาท (${item.category})
+        </p>
+      `
+    }
+
+    function addMenu() {
+      let newMenu = {
+        name: "ชาไทย",
+        price: 45,
+        category: "เครื่องดื่ม"
+      }
+
+      menuItems.push(newMenu)
+
+      menuDiv.innerHTML += `
+        <p>
+          ${newMenu.name} - ${newMenu.price} บาท (${newMenu.category})
         </p>
       `
     }
