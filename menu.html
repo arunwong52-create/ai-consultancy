@@ -9,9 +9,13 @@
 
   <div id="menu"></div>
 
-  <button onclick="addMenu()">
-    เพิ่มเมนู
-  </button>
+<!-- ช่องกรอกข้อมูล -->
+<input id="nameInput" type="text" placeholder="ชื่อเมนู">
+<input id="priceInput" type="number" placeholder="ราคา">
+<input id="categoryInput" type="text" placeholder="ประเภทอาหาร">
+<button onclick="addMenu()">
+  เพิ่มเมนู
+</button>
 
   <script>
     let menuItems = [
@@ -41,22 +45,21 @@
         </p>
       `
     }
-
     function addMenu() {
-      let newMenu = {
-        name: "ชาไทย",
-        price: 45,
-        category: "เครื่องดื่ม"
-      }
+  let newMenu = {
+    name: document.getElementById("nameInput").value,
+    price: Number(document.getElementById("priceInput").value),
+    category: document.getElementById("categoryInput").value
+  }
 
-      menuItems.push(newMenu)
+  menuItems.push(newMenu)
 
-      menuDiv.innerHTML += `
-        <p>
-          ${newMenu.name} - ${newMenu.price} บาท (${newMenu.category})
-        </p>
-      `
-    }
+  menuDiv.innerHTML += `
+    <p>
+      ${newMenu.name} - ${newMenu.price} บาท (${newMenu.category})
+    </p>
+  `
+}
   </script>
 
 </body>
