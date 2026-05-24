@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" href="menu.css">
   <title>Menu</title>
 </head>
 <body>
@@ -19,46 +20,19 @@
 
   <script>
     let menuItems = [
-  {
-    name: "ข้าวผัดกุ้ง",
-    price: 89,
-    category: "ของคาว"
-  },
-  {
-    name: "บิงซู",
-    price: 129,
-    category: "ของหวาน"
-  },
-  {
-    name: "ชาไทย",
-    price: 45,
-    category: "เครื่องดื่ม"
-  }
-]
+    { name: "ข้าวผัดกุ้ง", price: 120 },
+    { name: "ชาไทย", price: 50 }
+];
 
-    let menuDiv = document.getElementById("menu")
+let menuDiv = document.getElementById("menu");
 
-    for (let item of menuItems) {
-      menuDiv.innerHTML += `
-        <p>
-          ${item.name} - ${item.price} บาท (${item.category})
-        </p>
-      `
-    }
-    function addMenu() {
-  let newMenu = {
-    name: document.getElementById("nameInput").value,
-    price: Number(document.getElementById("priceInput").value),
-    category: document.getElementById("categoryInput").value
-  }
-
-  menuItems.push(newMenu)
-
-  menuDiv.innerHTML += `
-    <p>
-      ${newMenu.name} - ${newMenu.price} บาท (${newMenu.category})
-    </p>
-  `
+for (let item of menuItems) {
+    menuDiv.innerHTML += `
+        <div class="menu-card">
+            <h2>${item.name}</h2>
+            <p>${item.price} บาท</p>
+        </div>
+    `;
 }
   </script>
 
