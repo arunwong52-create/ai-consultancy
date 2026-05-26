@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="menu.css">
+  <title>Menu</title>
+</head>
+<body>
+
+  <h1>รายการอาหาร</h1>
+
+  <div id="menu"></div>
+
+<!-- ช่องกรอกข้อมูล -->
+<input id="nameInput" type="text" placeholder="ชื่อเมนู">
+<input id="priceInput" type="number" placeholder="ราคา">
+<input id="categoryInput" type="text" placeholder="ประเภทอาหาร">
+<button onclick="addMenu()">
+  เพิ่มเมนู
+</button>
+
+  <script>
+    let menuItems = [
+    { name: "ข้าวผัดกุ้ง", price: 120 },
+    { name: "ชาไทย", price: 50 }
+];
+
+let menuDiv = document.getElementById("menu");
+
+for (let item of menuItems) {
+    menuDiv.innerHTML += `
+        <div class="menu-card">
+            <h2>${item.name}</h2>
+            <p>${item.price} บาท</p>
+        </div>
+    `;
+}
+  </script>
+
+</body>
+</html>

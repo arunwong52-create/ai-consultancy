@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grid Restaurant</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    .header {
+      grid-column: 1 / 4;
+      background-color: orange;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    .menu {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .footer {
+      grid-column: 1 / 4;
+      background-color: black;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      .header {
+        grid-column: 1 / 2;
+      }
+
+      .footer {
+        grid-column: 1 / 2;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="header">
+      <h1>ร้านอาหารของพอร์</h1>
+    </div>
+
+    <div class="menu">
+      <h2>ข้าวผัดกุ้ง</h2>
+      <p>ราคา 80 บาท</p>
+    </div>
+
+    <div class="menu">
+      <h2>ผัดไทย</h2>
+      <p>ราคา 70 บาท</p>
+    </div>
+
+    <div class="menu">
+      <h2>ต้มยำกุ้ง</h2>
+      <p>ราคา 120 บาท</p>
+    </div>
+
+    <div class="footer">
+      <p>เปิดทุกวัน 10:00 - 22:00</p>
+    </div>
+
+  </div>
+
+</body>
+</html>

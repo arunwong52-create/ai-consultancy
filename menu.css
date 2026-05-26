@@ -1,0 +1,28 @@
+.menu-card {
+    border: 2px solid #ffb347;
+    padding: 15px;
+    border-radius: 12px;
+
+    width: 300px;
+    margin: 15px;
+
+    background-color: #fff8e7;
+    color: #333;
+
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+#menu {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
