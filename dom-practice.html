@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1 id="title">ร้านอาหารของพอร์</h1>
+  <p class="menu-item">ข้าวผัด 50 บาท</p>
+  <p class="menu-item">ผัดไทย 60 บาท</p>
+  <button id="changeBtn">เปลี่ยนชื่อร้าน</button>
+  <button id="redBtn">เปลี่ยนชื่อร้าน</button>
+
+  <script>
+    const title = document.getElementById("title");
+  const redBtn = document.getElementById("redBtn");
+
+  redBtn.addEventListener("click", function() {
+    title.style.color = "red";
+})
+  </script>
+</body>
+</html>

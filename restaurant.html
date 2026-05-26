@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ร้านอาหารไทย</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        background-color: #fff8f0;
+        font-family: 'Sarabun', sans-serif;
+        text-align: center;
+      }
+      h1 { color: #c0392b; font-size: 40px; margin-top: 40px; }
+      h2 { color: #e67e22; }
+      h3 { color: #c0392b; margin: 0; }
+      .menu-item {
+        background-color: white;
+        width: 300px;
+        margin: 15px auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+      }
+      #cart {
+        background-color: white;
+        width: 300px;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+        border: 2px solid #e67e22;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🍜 ร้านอาหารไทยของพอร์</h1>
+    <h2>เมนูวันนี้</h2>
+
+    <div id="cart">
+      <h3>🛒 รายการที่สั่ง</h3>
+      <p id="cart-items">ยังไม่มีรายการ</p>
+      <p>ราคารวม: <strong id="total">0</strong> บาท</p>
+      <button onclick="clearCart()">🗑️ ล้างรายการ</button>
+    </div>
+    <div id="menu-container"></div>
+  <script>
+      let menuItems = [
+    { name: "ส้มตำ", price: 50 },
+    { name: "ผัดไทย", price: 80 },
+    { name: "ต้มยำกุ้ง", price: 120 },
+    { name: "ข้าวผัดกะเพรา", price: 60 }
+];
+function buildMenu() {
+    let container = document.getElementById("menu-container");
+    container.innerHTML = "";
+    
+    for (let i = 0; i < menuItems.length; i++) {
+        let item = menuItems[i];
+        container.innerHTML += `
+            <div class="menu-item">
+                <h3>${item.name}</h3>
+                <p>${item.price} บาท</p>
+                <button onclick="orderFood('${item.name}', ${item.price})">สั่งเลย!</button>
+            </div>
+        `;
+    }
+}
+      let totalPrice = 0;
+      let orders = [];
+
+      function orderFood(menuName, price) {
+        orders.push(menuName);
+        totalPrice = totalPrice + price;
+        document.getElementById("cart-items").innerText = orders.join(", ");
+        document.getElementById("total").innerText = totalPrice;
+        if (totalPrice > 200) {
+    alert("🎉 ยอดเกิน 200 บาท! ได้รับส่วนลด 10%")
+}
+      }
+
+      function clearCart() {
+        orders = [];
+        totalPrice = 0;
+        document.getElementById("cart-items").innerText = "ยังไม่มีรายการ";
+        document.getElementById("total").innerText = 0;
+      }
+buildMenu();
+</script>
+  </body>
+</html>
