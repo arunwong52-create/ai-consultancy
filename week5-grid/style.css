@@ -1,0 +1,70 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+/* Desktop layout */
+.container {
+  display: grid;
+
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+
+  grid-template-columns: 200px 1fr;
+
+  min-height: 100vh;
+}
+
+/* Header */
+header {
+  grid-area: header;
+  background-color: #8B0000;
+  color: white;
+  padding: 20px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* Sidebar */
+.sidebar {
+  grid-area: sidebar;
+  background-color: #e6e6e6;
+  padding: 20px;
+}
+
+/* Main */
+main {
+  grid-area: main;
+  background-color: #ffffff;
+  padding: 20px;
+}
+
+/* Footer */
+footer {
+  grid-area: footer;
+  background-color: #2b2b2b;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Mobile layout */
+@media (max-width: 600px) {
+
+  .container {
+    grid-template-columns: 1fr;
+
+    grid-template-areas:
+      "header"
+      "sidebar"
+      "main"
+      "footer";
+  }
+
+  /* สำคัญ: ล้างโครง 2 คอลัมน์ */
+  .container {
+    grid-template-columns: 1fr;
+  }
+}
