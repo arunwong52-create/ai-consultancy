@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Restaurant Cards</title>
+
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    #card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      padding: 20px;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      overflow: hidden;
+      padding: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      background: white;
+    }
+
+    .card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🍜 ร้านอาหาร</h1>
+
+  <!-- container -->
+  <div id="card-container"></div>
+
+  <script>
+    // 🧩 ส่วนที่ 1: data + status
+    const restaurants = [
+      {
+        name: "ข้าวซอยลุง",
+        image: "https://via.placeholder.com/300x200",
+        rating: 4.5,
+        status: "open"
+      },
+      {
+        name: "ส้มตำแซ่บเวอร์",
+        image: "https://via.placeholder.com/300x200",
+        rating: 4.2,
+        status: "closed"
+      },
+      {
+        name: "ก๋วยเตี๋ยวเรือ",
+        image: "https://via.placeholder.com/300x200",
+        rating: 4.7,
+        status: "open"
+      },
+      {
+        name: "หมูกระทะฟีลดี",
+        image: "https://via.placeholder.com/300x200",
+        rating: 4.8,
+        status: "closed"
+      }
+    ];
+
+    // ⚙️ ส่วนที่ 2: render card
+    const container = document.getElementById("card-container");
+
+    restaurants.forEach((shop) => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img src="${shop.image}" alt="${shop.name}" />
+        <h3>${shop.name}</h3>
+        <p>⭐ ${shop.rating}</p>
+        <p>${shop.status === "open" ? "🟢 เปิดอยู่" : "🔴 ปิดแล้ว"}</p>
+        </p>
+      `;
+
+      container.appendChild(card);
+    });
+  </script>
+
+</body>
+</html>
