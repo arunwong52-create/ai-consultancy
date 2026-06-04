@@ -20,8 +20,8 @@ const restaurants = [
 ];
 
 const container = document.getElementById("card-container");
+const searchInput = document.getElementById("search-input");
 
-// render function
 function renderRestaurants(data) {
   container.innerHTML = "";
 
@@ -48,15 +48,52 @@ function renderRestaurants(data) {
 // initial render
 renderRestaurants(restaurants);
 
-// SEARCH
-const searchInput = document.getElementById("search-input");
 
-searchInput.addEventListener("input", (event) => {
-  const keyword = event.target.value.toLowerCase();
+
+// 🔍 SEARCH
+
+searchInput.addEventListener("input", (e) => {
+  const keyword = e.target.value.toLowerCase();
 
   const filtered = restaurants.filter((shop) => {
     return shop.name.toLowerCase().includes(keyword);
   });
 
   renderRestaurants(filtered);
+});
+
+// 🔍 SEARCH
+
+const buttons = document.querySelectorAll(".filters button");
+
+function setActive(btn) {
+  buttons.forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+// ALL
+document.getElementById("all-btn").addEventListener("click", (e) => {
+  setActive(e.target);
+  renderRestaurants(restaurants);
+});
+
+// OPEN
+document.getElementById("open-btn").addEventListener("click", (e) => {
+  setActive(e.target);
+  const result = restaurants.filter(r => r.status === "open");
+  renderRestaurants(result);
+});
+
+// CLOSED
+document.getElementById("closed-btn").addEventListener("click", (e) => {
+  setActive(e.target);
+  const result = restaurants.filter(r => r.status === "closed");
+  renderRestaurants(result);
+});
+
+// RATING
+document.getElementById("rating-btn").addEventListener("click", (e) => {
+  setActive(e.target);
+  const result = restaurants.filter(r => r.rating >= 4.5);
+  renderRestaurants(result);
 });
