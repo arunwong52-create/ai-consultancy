@@ -22,9 +22,10 @@ const restaurants = [
 const container = document.getElementById("card-container");
 const searchInput = document.getElementById("search-input");
 
-let currentData = [...restaurants];
+let currentFilter = "all";
+let sortByRating = false;
 
-// 🎯 render
+// Render
 function renderRestaurants(data) {
   container.innerHTML = "";
 
@@ -35,10 +36,11 @@ function renderRestaurants(data) {
 
   data.forEach((shop) => {
     const card = document.createElement("div");
+
     card.className = "card";
 
     card.innerHTML = `
-      <img src="${shop.image}" />
+      <img src="${shop.image}" alt="${shop.name}">
       <h3>${shop.name}</h3>
       <p>⭐ ${shop.rating}</p>
       <p>${shop.status === "open" ? "🟢 เปิดอยู่" : "🔴 ปิดแล้ว"}</p>
@@ -48,76 +50,94 @@ function renderRestaurants(data) {
   });
 }
 
-// 🚀 initial render
-renderRestaurants(currentData);
+// Update View
+function updateView() {
+  const keyword = searchInput.value.toLowerCase();
 
+  let result = [...restaurants];
 
-
-// 🔍 SEARCH 
-
-searchInput.addEventListener("input", (e) => {
-  const keyword = e.target.value.toLowerCase();
-
-  const filtered = restaurants.filter((shop) =>
+  // Search
+  result = result.filter((shop) =>
     shop.name.toLowerCase().includes(keyword)
   );
 
-  currentData = filtered;
-  renderRestaurants(filtered);
-});
+  // Filter
+  if (currentFilter === "open") {
+    result = result.filter((shop) => shop.status === "open");
+  }
 
+  if (currentFilter === "closed") {
+    result = result.filter((shop) => shop.status === "closed");
+  }
 
-// 🔍 SEARCH
+  if (currentFilter === "rating") {
+    result = result.filter((shop) => shop.rating >= 4.5);
+  }
 
-const buttons = document.querySelectorAll(".filters button");
+  // Sort
+  if (sortByRating) {
+    result.sort((a, b) => b.rating - a.rating);
+  }
 
-function setActive(btn) {
-  buttons.forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
+  renderRestaurants(result);
 }
 
-// ALL
-document.getElementById("all-btn").addEventListener("click", (e) => {
-  setActive(e.target);
-  currentData = restaurants;
-  renderRestaurants(restaurants);
+// Initial Render
+updateView();
+
+// Search Event
+searchInput.addEventListener("input", () => {
+  updateView();
 });
 
-// OPEN
-document.getElementById("open-btn").addEventListener("click", (e) => {
-  setActive(e.target);
-  const result = restaurants.filter(r => r.status === "open");
-  currentData = result;
-  renderRestaurants(result);
-});
+// Filter Buttons
+const buttons = document.querySelectorAll(".filters button");
 
-// CLOSED
-document.getElementById("closed-btn").addEventListener("click", (e) => {
-  setActive(e.target);
-  const result = restaurants.filter(r => r.status === "closed");
-  currentData = result;
-  renderRestaurants(result);
-});
-
-// RATING 4.5+
-document.getElementById("rating-btn").addEventListener("click", (e) => {
-  setActive(e.target);
-  const result = restaurants.filter(r => r.rating >= 4.5);
-  currentData = result;
-  renderRestaurants(result);
-});
-
-
-
-// 🔍 SEARCH
-
-document.getElementById("sort-btn").addEventListener("click", (e) => {
-  setActive(e.target);
-
-  const sorted = [...currentData].sort((a, b) => {
-    return b.rating - a.rating;
+function setActive(clickedBtn) {
+  buttons.forEach((btn) => {
+    if (btn.id !== "sort-btn") {
+      btn.classList.remove("active");
+    }
   });
 
-  currentData = sorted;
-  renderRestaurants(sorted);
+  clickedBtn.classList.add("active");
+}
+
+// All
+document.getElementById("all-btn").addEventListener("click", (e) => {
+  currentFilter = "all";
+  setActive(e.target);
+  updateView();
+});
+
+// Open
+document.getElementById("open-btn").addEventListener("click", (e) => {
+  currentFilter = "open";
+  setActive(e.target);
+  updateView();
+});
+
+// Closed
+document.getElementById("closed-btn").addEventListener("click", (e) => {
+  currentFilter = "closed";
+  setActive(e.target);
+  updateView();
+});
+
+// Rating 4.5+
+document.getElementById("rating-btn").addEventListener("click", (e) => {
+  currentFilter = "rating";
+  setActive(e.target);
+  updateView();
+});
+
+// Sort Button (Toggle)
+const sortBtn = document.getElementById("sort-btn");
+
+sortBtn.addEventListener("click", () => {
+  sortByRating = !sortByRating;
+
+  sortBtn.classList.toggle("active");
+
+  updateView();
 });
