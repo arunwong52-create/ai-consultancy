@@ -22,6 +22,9 @@ const restaurants = [
 const container = document.getElementById("card-container");
 const searchInput = document.getElementById("search-input");
 
+let currentData = [...restaurants];
+
+// 🎯 render
 function renderRestaurants(data) {
   container.innerHTML = "";
 
@@ -45,22 +48,24 @@ function renderRestaurants(data) {
   });
 }
 
-// initial render
-renderRestaurants(restaurants);
+// 🚀 initial render
+renderRestaurants(currentData);
 
 
 
-// 🔍 SEARCH
+// 🔍 SEARCH 
 
 searchInput.addEventListener("input", (e) => {
   const keyword = e.target.value.toLowerCase();
 
-  const filtered = restaurants.filter((shop) => {
-    return shop.name.toLowerCase().includes(keyword);
-  });
+  const filtered = restaurants.filter((shop) =>
+    shop.name.toLowerCase().includes(keyword)
+  );
 
+  currentData = filtered;
   renderRestaurants(filtered);
 });
+
 
 // 🔍 SEARCH
 
@@ -74,6 +79,7 @@ function setActive(btn) {
 // ALL
 document.getElementById("all-btn").addEventListener("click", (e) => {
   setActive(e.target);
+  currentData = restaurants;
   renderRestaurants(restaurants);
 });
 
@@ -81,6 +87,7 @@ document.getElementById("all-btn").addEventListener("click", (e) => {
 document.getElementById("open-btn").addEventListener("click", (e) => {
   setActive(e.target);
   const result = restaurants.filter(r => r.status === "open");
+  currentData = result;
   renderRestaurants(result);
 });
 
@@ -88,12 +95,29 @@ document.getElementById("open-btn").addEventListener("click", (e) => {
 document.getElementById("closed-btn").addEventListener("click", (e) => {
   setActive(e.target);
   const result = restaurants.filter(r => r.status === "closed");
+  currentData = result;
   renderRestaurants(result);
 });
 
-// RATING
+// RATING 4.5+
 document.getElementById("rating-btn").addEventListener("click", (e) => {
   setActive(e.target);
   const result = restaurants.filter(r => r.rating >= 4.5);
+  currentData = result;
   renderRestaurants(result);
+});
+
+
+
+// 🔍 SEARCH
+
+document.getElementById("sort-btn").addEventListener("click", (e) => {
+  setActive(e.target);
+
+  const sorted = [...currentData].sort((a, b) => {
+    return b.rating - a.rating;
+  });
+
+  currentData = sorted;
+  renderRestaurants(sorted);
 });
