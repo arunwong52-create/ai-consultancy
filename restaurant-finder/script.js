@@ -16,12 +16,6 @@ const restaurants = [
     rating: 4.6,
     status: "open",
     image: "https://placehold.co/300x200"
-  },
-  {
-    name: "หมูกระทะฟีลดี",
-    rating: 4.3,
-    status: "closed",
-    image: "https://placehold.co/300x200"
   }
 ];
 
@@ -41,7 +35,7 @@ function renderRestaurants(data) {
     card.className = "card";
 
     card.innerHTML = `
-      <img src="${shop.image}" alt="${shop.name}">
+      <img src="${shop.image}" />
       <h3>${shop.name}</h3>
       <p>⭐ ${shop.rating}</p>
       <p>${shop.status === "open" ? "🟢 เปิดอยู่" : "🔴 ปิดแล้ว"}</p>
@@ -54,25 +48,15 @@ function renderRestaurants(data) {
 // initial render
 renderRestaurants(restaurants);
 
-// filter: all
-document.getElementById("all-btn").addEventListener("click", () => {
-  renderRestaurants(restaurants);
-});
+// SEARCH
+const searchInput = document.getElementById("search-input");
 
-// filter: open
-document.getElementById("open-btn").addEventListener("click", () => {
-  const result = restaurants.filter(r => r.status === "open");
-  renderRestaurants(result);
-});
+searchInput.addEventListener("input", (event) => {
+  const keyword = event.target.value.toLowerCase();
 
-// filter: closed
-document.getElementById("closed-btn").addEventListener("click", () => {
-  const result = restaurants.filter(r => r.status === "closed");
-  renderRestaurants(result);
-});
+  const filtered = restaurants.filter((shop) => {
+    return shop.name.toLowerCase().includes(keyword);
+  });
 
-// filter: rating >= 4.5
-document.getElementById("rating-btn").addEventListener("click", () => {
-  const result = restaurants.filter(r => r.rating >= 4.5);
-  renderRestaurants(result);
+  renderRestaurants(filtered);
 });
