@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>เมนูอาหาร</title>
-
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เมนูอาหาร</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <h1>เมนูอาหาร</h1>
+    <h1>เมนูอาหาร</h1>
 
-  <div id="menu-container"></div>
+    <div class="filter-buttons">
+        <button class="filter-btn" data-category="all">ทั้งหมด</button>
+        <button class="filter-btn" data-category="อาหารจานเดียว">อาหารจานเดียว</button>
+        <button class="filter-btn" data-category="ของหวาน">ของหวาน</button>
+        <button class="filter-btn" data-category="เครื่องดื่ม">เครื่องดื่ม</button>
+    </div>
 
-  <script src="script.js"></script>
+    <input
+        type="text"
+        id="search-input"
+        placeholder="ค้นหาเมนูอาหาร..."
+    >
+
+    <div id="menu-container"></div>
+
+    <script src="script.js"></script>
+
 </body>
 </html>

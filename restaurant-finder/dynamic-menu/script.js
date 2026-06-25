@@ -1,30 +1,18 @@
 const menu = [
   {
-    name: "ผัดกะเพราหมูสับ",
+    name: "ข้าวผัด",
     price: 60,
-    spicy: true,
-    category: "อาหารจานเดียว"
-  },
-  {
-    name: "ข้าวผัดปู",
-    price: 80,
     spicy: false,
     category: "อาหารจานเดียว"
   },
   {
-    name: "ต้มยำกุ้ง",
-    price: 120,
+    name: "กะเพราหมู",
+    price: 70,
     spicy: true,
-    category: "ซุป"
+    category: "อาหารจานเดียว"
   },
   {
-    name: "ส้มตำไทย",
-    price: 50,
-    spicy: true,
-    category: "สลัด"
-  },
-  {
-    name: "ชาไทยเย็น",
+    name: "ชาไทย",
     price: 45,
     spicy: false,
     category: "เครื่องดื่ม"
@@ -39,17 +27,73 @@ const menu = [
 
 const menuContainer = document.getElementById("menu-container");
 
-for (let i = 0; i < menu.length; i++) {
-  const dish = menu[i];
+function displayMenu(data) {
 
-  const cardHTML = `
-    <div class="dish-card">
-      <h3>${dish.name}</h3>
-      <p>ราคา: ${dish.price} บาท</p>
-      <p>หมวดหมู่: ${dish.category}</p>
-      <p>ความเผ็ด: ${dish.spicy ? "เผ็ด 🌶️" : "ไม่เผ็ด"}</p>
-    </div>
-  `;
+  menuContainer.innerHTML = "";
 
-  menuContainer.innerHTML += cardHTML;
+  for (let i = 0; i < data.length; i++) {
+
+    const dish = data[i];
+
+    const cardHTML = `
+      <div class="dish-card">
+        <h3>${dish.name}</h3>
+        <p>ราคา: ${dish.price} บาท</p>
+        <p>หมวดหมู่: ${dish.category}</p>
+        <p>ความเผ็ด: ${dish.spicy ? "เผ็ด 🌶️" : "ไม่เผ็ด"}</p>
+      </div>
+    `;
+
+    menuContainer.innerHTML += cardHTML;
+  }
 }
+
+// แสดงเมนูทั้งหมดตอนเปิดเว็บ
+displayMenu(menu);
+
+// ====================
+// Filter Category
+// ====================
+
+const buttons = document.querySelectorAll(".filter-btn");
+
+buttons.forEach(function(button) {
+
+  button.addEventListener("click", function() {
+
+    const selectedCategory = button.dataset.category;
+
+    if (selectedCategory === "all") {
+
+      displayMenu(menu);
+
+    } else {
+
+      const filteredMenu = menu.filter(function(item) {
+        return item.category === selectedCategory;
+      });
+
+      displayMenu(filteredMenu);
+    }
+
+  });
+
+});
+
+// ====================
+// Search Menu
+// ====================
+
+const searchInput = document.getElementById("search-input");
+
+searchInput.addEventListener("input", function() {
+
+  const searchText = searchInput.value;
+
+  const filteredMenu = menu.filter(function(item) {
+    return item.name.includes(searchText);
+  });
+
+  displayMenu(filteredMenu);
+
+});
