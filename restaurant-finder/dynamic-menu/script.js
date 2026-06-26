@@ -38,16 +38,34 @@ function displayMenu(data) {
 
     const dish = data[i];
 
-    const cardHTML = `
-      <div class="dish-card">
-        <h3>${dish.name}</h3>
-        <p>ราคา: ${dish.price} บาท</p>
-        <p>หมวดหมู่: ${dish.category}</p>
-        <p>ความเผ็ด: ${dish.spicy ? "เผ็ด 🌶️" : "ไม่เผ็ด"}</p>
-      </div>
-    `;
+    // สร้าง card
+    const card = document.createElement("div");
+    card.classList.add("dish-card");
 
-    menuContainer.innerHTML += cardHTML;
+    // ชื่อเมนู
+    const title = document.createElement("h3");
+    title.textContent = dish.name;
+
+    // ราคา
+    const price = document.createElement("p");
+    price.textContent = `ราคา: ${dish.price} บาท`;
+
+    // หมวดหมู่
+    const category = document.createElement("p");
+    category.textContent = `หมวดหมู่: ${dish.category}`;
+
+    // ความเผ็ด
+    const spicy = document.createElement("p");
+    spicy.textContent = `ความเผ็ด: ${dish.spicy ? "เผ็ด 🌶️" : "ไม่เผ็ด"}`;
+
+    // ประกอบ card
+    card.appendChild(title);
+    card.appendChild(price);
+    card.appendChild(category);
+    card.appendChild(spicy);
+
+    // แสดงบนหน้าเว็บ
+    menuContainer.appendChild(card);
   }
 }
 
