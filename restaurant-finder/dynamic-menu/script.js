@@ -27,6 +27,9 @@ const menu = [
 
 const menuContainer = document.getElementById("menu-container");
 
+let searchText = "";
+let selectedCategory = "all";
+
 function displayMenu(data) {
 
   menuContainer.innerHTML = "";
@@ -48,6 +51,28 @@ function displayMenu(data) {
   }
 }
 
+// ====================
+// Update Menu
+// ====================
+
+function updateMenu() {
+
+  const filteredMenu = menu.filter(function(item) {
+
+    const matchCategory =
+      selectedCategory === "all" ||
+      item.category === selectedCategory;
+
+    const matchSearch =
+      searchText === "" ||
+      item.name.includes(searchText);
+
+    return matchCategory && matchSearch;
+  });
+
+  displayMenu(filteredMenu);
+}
+
 // แสดงเมนูทั้งหมดตอนเปิดเว็บ
 displayMenu(menu);
 
@@ -61,20 +86,9 @@ buttons.forEach(function(button) {
 
   button.addEventListener("click", function() {
 
-    const selectedCategory = button.dataset.category;
+    selectedCategory = button.dataset.category;
 
-    if (selectedCategory === "all") {
-
-      displayMenu(menu);
-
-    } else {
-
-      const filteredMenu = menu.filter(function(item) {
-        return item.category === selectedCategory;
-      });
-
-      displayMenu(filteredMenu);
-    }
+    updateMenu();
 
   });
 
@@ -88,12 +102,8 @@ const searchInput = document.getElementById("search-input");
 
 searchInput.addEventListener("input", function() {
 
-  const searchText = searchInput.value;
+  searchText = searchInput.value;
 
-  const filteredMenu = menu.filter(function(item) {
-    return item.name.includes(searchText);
-  });
-
-  displayMenu(filteredMenu);
+  updateMenu();
 
 });
