@@ -5,58 +5,8 @@ const searchInput = document.getElementById("search-input");
 const continentFilter = document.getElementById("continent-filter");
 const sortSelect = document.getElementById("sort-select");
 
-const countries = [
-  {
-    name: {
-      common: "Thailand"
-    },
-    flags: {
-      png: "https://flagcdn.com/w320/th.png"
-    },
-    population: 71697030,
-    region: "Asia"
-  },
-  {
-    name: {
-      common: "Japan"
-    },
-    flags: {
-      png: "https://flagcdn.com/w320/jp.png"
-    },
-    population: 125836021,
-    region: "Asia"
-  },
-  {
-    name: {
-      common: "France"
-    },
-    flags: {
-      png: "https://flagcdn.com/w320/fr.png"
-    },
-    population: 68042591,
-    region: "Europe"
-  },
-  {
-    name: {
-      common: "Brazil"
-    },
-    flags: {
-      png: "https://flagcdn.com/w320/br.png"
-    },
-    population: 215313498,
-    region: "Americas"
-  },
-  {
-    name: {
-      common: "Australia"
-    },
-    flags: {
-      png: "https://flagcdn.com/w320/au.png"
-    },
-    population: 26068792,
-    region: "Oceania"
-  }
-];
+// เก็บข้อมูลจาก API
+let countries = [];
 
 // ====================
 // Display Countries
@@ -73,13 +23,13 @@ function displayCountries(data) {
 
     const flag = document.createElement("img");
     flag.src = country.flags.png;
-    flag.alt = country.name.common;
+    flag.alt = country.name;
 
     const name = document.createElement("h2");
-    name.textContent = country.name.common;
+    name.textContent = country.name;
 
     const population = document.createElement("p");
-    population.textContent = `Population: ${country.population}`;
+    population.textContent = `Population: ${country.population.toLocaleString()}`;
 
     const region = document.createElement("p");
     region.textContent = `Region: ${country.region}`;
@@ -108,7 +58,7 @@ function applyFilters() {
   let filteredCountries = countries.filter(function(country) {
 
     const matchSearch =
-      country.name.common.toLowerCase().includes(searchText);
+      country.name.toLowerCase().includes(searchText);
 
     const matchRegion =
       selectedRegion === "all" ||
@@ -121,13 +71,13 @@ function applyFilters() {
   if (sortValue === "name-asc") {
 
     filteredCountries.sort(function(a, b) {
-      return a.name.common.localeCompare(b.name.common);
+      return a.name.localeCompare(b.name);
     });
 
   } else if (sortValue === "name-desc") {
 
     filteredCountries.sort(function(a, b) {
-      return b.name.common.localeCompare(a.name.common);
+      return b.name.localeCompare(a.name);
     });
 
   } else if (sortValue === "population-asc") {
@@ -149,21 +99,51 @@ function applyFilters() {
 }
 
 // ====================
-// Start App
+// Fetch Countries
 // ====================
 
-function fetchCountries() {
+async function fetchCountries() {
 
-  applyFilters();
+  loading.style.display = "block";
 
-  loading.style.display = "none";
+  try {
+
+    const response = await fetch(
+      "https://countries.dev/countries?fields=name,population,region,flags"
+    );
+
+    countries = await response.json();
+
+    applyFilters();
+
+  } catch (error) {
+
+    console.error(error);
+
+    countryContainer.innerHTML = `
+      <p>Failed to load countries.</p>
+    `;
+
+  } finally {
+
+    loading.style.display = "none";
+
+  }
 
 }
+
+// ====================
+// Event Listeners
+// ====================
 
 searchInput.addEventListener("input", applyFilters);
 
 continentFilter.addEventListener("change", applyFilters);
 
 sortSelect.addEventListener("change", applyFilters);
+
+// ====================
+// Start App
+// ====================
 
 fetchCountries();
