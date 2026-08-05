@@ -1,51 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Country Explorer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Explorer</title>
 
-  <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <h1>🌍 Country Explorer</h1>
+    <h1>🌍 Country Explorer</h1>
 
-  <!-- Search -->
-  <input
-    type="text"
-    id="search-input"
-    placeholder="Search country..."
-  >
+    <div class="controls">
 
-  <!-- Filter -->
-  <select id="continent-filter">
-    <option value="all">All Continents</option>
-    <option value="Asia">Asia</option>
-    <option value="Europe">Europe</option>
-    <option value="Africa">Africa</option>
-    <option value="Americas">Americas</option>
-    <option value="Oceania">Oceania</option>
-  </select>
+        <input 
+            id="search-input"
+            type="text"
+            placeholder="ค้นหาประเทศ..."
+        >
 
-  <!-- Sort -->
-  <select id="sort-select">
-    <option value="name-asc">Name (A-Z)</option>
-    <option value="name-desc">Name (Z-A)</option>
-    <option value="population-asc">Population (Low-High)</option>
-    <option value="population-desc">Population (High-Low)</option>
-  </select>
+        <select id="region-filter">
+            <option value="all">ทุกทวีป</option>
+            <option value="Asia">Asia</option>
+            <option value="Europe">Europe</option>
+            <option value="Africa">Africa</option>
+            <option value="Americas">Americas</option>
+            <option value="Oceania">Oceania</option>
+        </select>
 
-  <!-- Loading -->
-  <p id="loading">Loading countries...</p>
 
-  <!-- Error -->
-  <p id="error"></p>
+        <select id="sort-select">
+            <option value="default">
+                เรียงปกติ
+            </option>
 
-  <!-- Country Cards -->
-  <div id="country-container"></div>
+            <option value="name">
+                ชื่อ A-Z
+            </option>
 
-  <script src="script.js"></script>
+            <option value="population">
+                ประชากรมาก-น้อย
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <p id="loading">
+        Loading countries...
+    </p>
+
+
+    <p id="error"></p>
+
+
+    <div id="country-container"></div>
+
+
+<script src="script.js"></script>
 
 </body>
 </html>
