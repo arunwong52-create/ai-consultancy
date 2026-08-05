@@ -117,6 +117,10 @@ function applyFilters() {
 
 
 
+  // ====================
+  // Sort
+  // ====================
+
   if (sortValue === "name-asc") {
 
 
@@ -164,7 +168,24 @@ function applyFilters() {
 
 
 
-  displayCountries(filteredCountries);
+  // ====================
+  // No Results Check
+  // ====================
+
+  if (filteredCountries.length === 0) {
+
+    countryContainer.innerHTML = `
+      <p class="no-results">
+        🔍 ไม่พบประเทศที่ค้นหา
+      </p>
+    `;
+
+  } 
+  else {
+
+    displayCountries(filteredCountries);
+
+  }
 
 
 }
@@ -218,7 +239,9 @@ async function fetchCountries() {
 
 
     countryContainer.innerHTML = `
-      <p>Failed to load countries.</p>
+      <p>
+        Failed to load countries.
+      </p>
     `;
 
 
