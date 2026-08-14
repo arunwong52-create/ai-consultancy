@@ -1,167 +1,484 @@
+/* =========================
+   CSS Variables
+========================= */
+
+:root {
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+
+  --background-color: #f4f7fb;
+  --card-color: #ffffff;
+
+  --text-color: #1f2937;
+  --muted-color: #6b7280;
+
+  --border-color: #dbe3ef;
+
+  --success-color: #16a34a;
+  --error-color: #dc2626;
+
+  --shadow:
+    0 10px 30px rgba(15, 23, 42, 0.08);
+
+  --radius: 16px;
+}
+
+
+/* =========================
+   Reset
+========================= */
+
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
+
+
+/* =========================
+   Body
+========================= */
 
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f7fb;
-  color: #222;
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background: var(--background-color);
+
+  color: var(--text-color);
+
+  min-height: 100vh;
 }
+
+
+/* =========================
+   Main Container
+========================= */
 
 .container {
-  width: min(900px, 90%);
-  margin: 60px auto;
-  text-align: center;
+  width: min(100% - 32px, 1000px);
+
+  margin: 0 auto;
+
+  padding: 60px 0;
 }
 
+
+/* =========================
+   Header
+========================= */
+
 h1 {
-  margin-bottom: 8px;
-  font-size: 40px;
+  text-align: center;
+
+  color: var(--primary-color);
+
+  font-size: 42px;
+
+  margin-bottom: 10px;
 }
 
 .subtitle {
-  color: #666;
-  margin-bottom: 30px;
+  text-align: center;
+
+  color: var(--muted-color);
+
+  font-size: 17px;
+
+  margin-bottom: 35px;
 }
+
+
+/* =========================
+   Search Box
+========================= */
 
 .search-box {
   display: flex;
+
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 30px;
+
+  align-items: stretch;
+
+  gap: 12px;
+
+  max-width: 650px;
+
+  margin: 0 auto 35px;
 }
 
+
+/* =========================
+   Input
+========================= */
+
 #countryInput {
-  width: 320px;
-  padding: 12px 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  flex: 1;
+
+  min-width: 0;
+
+  padding: 14px 16px;
+
   font-size: 16px;
+
+  color: var(--text-color);
+
+  background: var(--card-color);
+
+  border: 2px solid var(--border-color);
+
+  border-radius: 10px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+#countryInput::placeholder {
+  color: #9ca3af;
 }
 
 #countryInput:focus {
   outline: none;
-  border-color: #555;
+
+  border-color: var(--primary-color);
+
+  box-shadow:
+    0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
+
+/* =========================
+   Search Button
+========================= */
+
 #searchBtn {
-  padding: 12px 22px;
+  padding: 14px 24px;
+
   border: none;
-  border-radius: 8px;
-  background: #222;
+
+  border-radius: 10px;
+
+  background: var(--primary-color);
+
   color: white;
+
   font-size: 16px;
+
+  font-weight: 600;
+
   cursor: pointer;
-  transition: 0.2s;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 #searchBtn:hover {
-  opacity: 0.85;
-  transform: translateY(-1px);
+  background: var(--primary-hover);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 6px 15px rgba(37, 99, 235, 0.25);
+}
+
+#searchBtn:active {
+  transform: translateY(0);
 }
 
 #searchBtn:disabled {
-  opacity: 0.5;
+  opacity: 0.6;
+
   cursor: not-allowed;
+
   transform: none;
+
+  box-shadow: none;
 }
+
+
+/* =========================
+   Loading
+========================= */
 
 .loading {
-  margin: 30px 0;
+  text-align: center;
+
+  color: var(--primary-color);
+
   font-size: 18px;
+
+  font-weight: 600;
+
+  margin: 30px 0;
 }
+
+
+/* =========================
+   Result Area
+========================= */
+
+#result {
+  width: 100%;
+}
+
+
+/* =========================
+   Country Card
+========================= */
 
 .country-card {
-  max-width: 500px;
+  max-width: 550px;
+
   margin: 30px auto;
+
   padding: 30px;
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+
+  background: var(--card-color);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: var(--radius);
+
+  box-shadow: var(--shadow);
+
+  text-align: center;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
+.country-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 16px 35px rgba(15, 23, 42, 0.12);
+}
+
+
+/* =========================
+   Country Flag
+========================= */
+
 .country-card img {
-  width: 220px;
+  display: block;
+
+  width: 260px;
+
   max-width: 100%;
-  border-radius: 8px;
+
+  margin: 0 auto 25px;
+
+  border-radius: 10px;
+
+  border: 1px solid var(--border-color);
+
+  object-fit: cover;
+}
+
+
+/* =========================
+   Country Name
+========================= */
+
+.country-card h2 {
+  color: var(--primary-color);
+
+  font-size: 30px;
+
   margin-bottom: 20px;
 }
 
-.country-card h2 {
-  margin: 10px 0 20px;
-  font-size: 30px;
-}
+
+/* =========================
+   Country Information
+========================= */
 
 .country-card p {
-  margin: 12px 0;
-  color: #555;
+  color: var(--muted-color);
+
   font-size: 17px;
-}
 
-.error-card {
-  max-width: 500px;
-  margin: 30px auto;
-  padding: 30px;
-  background: white;
-  border-radius: 15px;
-  border: 1px solid #ddd;
-}
+  margin: 10px 0;
 
-.error-card h2 {
-  margin-top: 0;
-}
-
-.error-card p {
-  color: #666;
   line-height: 1.6;
 }
 
+
+/* =========================
+   No Flag
+========================= */
+
+.no-flag {
+  padding: 30px 0;
+
+  color: var(--muted-color) !important;
+
+  font-size: 16px !important;
+}
+
+
+/* =========================
+   No Result
+========================= */
+
+.no-result {
+  text-align: center;
+
+  color: var(--muted-color);
+
+  font-size: 18px;
+
+  padding: 30px;
+}
+
+
+/* =========================
+   Error Card
+========================= */
+
+.error-card {
+  max-width: 550px;
+
+  margin: 30px auto;
+
+  padding: 30px;
+
+  background: var(--card-color);
+
+  border: 1px solid #fecaca;
+
+  border-radius: var(--radius);
+
+  box-shadow: var(--shadow);
+
+  text-align: center;
+}
+
+.error-card h2 {
+  color: var(--error-color);
+
+  margin-bottom: 15px;
+
+  font-size: 26px;
+}
+
+.error-card p {
+  color: var(--muted-color);
+
+  line-height: 1.7;
+
+  margin-bottom: 20px;
+}
+
+
+/* =========================
+   Retry Button
+========================= */
+
 .retry-button {
-  margin-top: 15px;
-  padding: 11px 20px;
+  padding: 12px 22px;
+
   border: none;
-  border-radius: 8px;
-  background: #222;
+
+  border-radius: 9px;
+
+  background: var(--primary-color);
+
   color: white;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
   cursor: pointer;
-  font-size: 15px;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .retry-button:hover {
-  opacity: 0.85;
+  background: var(--primary-hover);
+
+  transform: translateY(-2px);
 }
 
-.no-result {
-  margin-top: 30px;
-  color: #666;
-  font-size: 17px;
-}
 
-@media (max-width: 600px) {
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 700px) {
 
   .container {
-    margin-top: 35px;
+    width: min(100% - 24px, 1000px);
+
+    padding: 40px 0;
   }
 
   h1 {
-    font-size: 32px;
+    font-size: 34px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+
+    margin-bottom: 25px;
   }
 
   .search-box {
     flex-direction: column;
+
+    gap: 10px;
   }
 
-  #countryInput {
-    width: 100%;
-  }
-
+  #countryInput,
   #searchBtn {
     width: 100%;
   }
 
   .country-card {
-    padding: 20px;
+    padding: 22px;
+
+    margin-top: 20px;
+  }
+
+  .country-card h2 {
+    font-size: 26px;
+  }
+
+  .country-card img {
+    width: 220px;
+  }
+}
+
+
+/* =========================
+   Small Mobile
+========================= */
+
+@media (max-width: 400px) {
+
+  h1 {
+    font-size: 29px;
+  }
+
+  .country-card {
+    padding: 18px;
+  }
+
+  .country-card h2 {
+    font-size: 23px;
+  }
+
+  .country-card p {
+    font-size: 15px;
   }
 
 }
