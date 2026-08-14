@@ -1,192 +1,61 @@
-const countryContainer = document.getElementById("country-container");
+const countryInput = document.getElementById("countryInput");
+const searchBtn = document.getElementById("searchBtn");
+const result = document.getElementById("result");
 const loading = document.getElementById("loading");
 
-const searchInput = document.getElementById("search-input");
-const regionFilter = document.getElementById("region-filter");
-const sortSelect = document.getElementById("sort-select");
-
-// เก็บข้อมูลจาก API
-let countries = [];
-
 
 // ====================
-// Display Countries
+// Search Country
 // ====================
 
-function displayCountries(data) {
+async function searchCountry() {
 
-  countryContainer.innerHTML = "";
-
-  data.forEach(function(country) {
-
-    const card = document.createElement("div");
-    card.classList.add("country-card");
-
-    const flag = document.createElement("img");
-
-    // ถ้ารูปโหลดไม่สำเร็จ
-    flag.onerror = () => {
-
-      flag.onerror = null;
-
-      const noFlag = document.createElement("p");
-      noFlag.textContent = "🚩 No flag available";
-      noFlag.classList.add("no-flag");
-
-      card.replaceChild(noFlag, flag);
-
-    };
-
-    flag.src = country.flags.png;
-    flag.alt = country.name;
-
-    const name = document.createElement("h2");
-    name.textContent = country.name;
-
-    const population = document.createElement("p");
-    population.textContent =
-      `Population: ${country.population.toLocaleString()}`;
-
-    const region = document.createElement("p");
-    region.textContent =
-      `Region: ${country.region}`;
-
-    card.appendChild(flag);
-    card.appendChild(name);
-    card.appendChild(population);
-    card.appendChild(region);
-
-    countryContainer.appendChild(card);
-
-  });
-
-}
-
-
-// ====================
-// Search + Filter + Sort
-// ====================
-
-function applyFilters() {
-
-  const searchText =
-    searchInput.value.toLowerCase();
-
-  const selectedRegion =
-    regionFilter.value;
-
-  const sortValue =
-    sortSelect.value;
-
-
-  let filteredCountries =
-    countries.filter(function(country) {
-
-      const matchSearch =
-        country.name
-          .toLowerCase()
-          .includes(searchText);
-
-      const matchRegion =
-        selectedRegion === "all" ||
-        country.region === selectedRegion;
-
-      return matchSearch && matchRegion;
-
-    });
+  const countryName = countryInput.value.trim();
 
 
   // ====================
-  // Sort
+  // Empty Input
   // ====================
 
-  if (sortValue === "name-asc") {
+  if (countryName === "") {
 
-    filteredCountries.sort(function(a, b) {
-
-      return a.name.localeCompare(b.name);
-
-    });
-
-  }
-
-  else if (sortValue === "name-desc") {
-
-    filteredCountries.sort(function(a, b) {
-
-      return b.name.localeCompare(a.name);
-
-    });
-
-  }
-
-  else if (sortValue === "population-asc") {
-
-    filteredCountries.sort(function(a, b) {
-
-      return a.population - b.population;
-
-    });
-
-  }
-
-  else if (sortValue === "population-desc") {
-
-    filteredCountries.sort(function(a, b) {
-
-      return b.population - a.population;
-
-    });
-
-  }
-
-
-  // ====================
-  // No Results Check
-  // ====================
-
-  if (filteredCountries.length === 0) {
-
-    countryContainer.innerHTML = `
-      <p class="no-results">
-        🔍 ไม่พบประเทศที่ค้นหา
+    result.innerHTML = `
+      <p class="no-result">
+        🔍 กรุณาพิมพ์ชื่อประเทศก่อนค้นหา
       </p>
     `;
 
+    return;
   }
 
-  else {
 
-    displayCountries(filteredCountries);
-
-  }
-
-}
-
-
-// ====================
-// Fetch Countries
-// ====================
-
-async function fetchCountries() {
-
+  // ====================
   // Loading State
-  loading.style.display = "block";
+  // ====================
 
-  // ล้างข้อมูลเก่าหรือ Error Card
-  countryContainer.innerHTML = "";
+  loading.hidden = false;
+
+  result.innerHTML = "";
+
+  searchBtn.disabled = true;
+  searchBtn.textContent = "กำลังค้นหา...";
 
 
   try {
 
+    // ====================
     // Fetch API
-    const response =
-      await fetch(
-         "https://countries.dev/this-api-does-not-exist"
-      );
+    // ====================
+
+    const response = await fetch(
+      `https://countries.dev/name/${encodeURIComponent(countryName)}`
+    );
 
 
-    // ตรวจสอบ HTTP Error
+    // ====================
+    // HTTP Error
+    // ====================
+
     if (!response.ok) {
 
       throw new Error(
@@ -196,61 +65,110 @@ async function fetchCountries() {
     }
 
 
-    // แปลงข้อมูลเป็น JSON
-    countries =
-      await response.json();
+    // ====================
+    // Convert JSON
+    // ====================
+
+    const data = await response.json();
 
 
-    // Success State
-    applyFilters();
+    // ดูข้อมูลจริงจาก API
+    console.log("API response:", data);
+
+
+    // ====================
+    // Support Array / Object
+    // ====================
+
+    const country = Array.isArray(data)
+      ? data[0]
+      : data;
+
+
+    // ====================
+    // Check Result
+    // ====================
+
+    if (!country) {
+
+      throw new Error(
+        "Country not found"
+      );
+
+    }
+
+
+    // ====================
+    // Display Country
+    // ====================
+
+    displayCountry(country);
 
   }
 
 
+  // ====================
+  // Error Handling
+  // ====================
+
   catch (error) {
 
     console.error(
-      "Failed to load countries:",
+      "Search failed:",
       error
     );
 
 
-    // Error State
-    countryContainer.innerHTML = `
+    result.innerHTML = `
       <div class="error-card">
 
-        <h2>โหลดข้อมูลไม่สำเร็จ 😕</h2>
+        <h2>
+          ❌ ค้นหาไม่สำเร็จ
+        </h2>
 
         <p>
-          เกิดข้อผิดพลาดในการเชื่อมต่อ
+          ไม่พบข้อมูลประเทศหรือเกิดปัญหาในการเชื่อมต่อ
           กรุณาลองใหม่อีกครั้ง
         </p>
 
-        <button id="retry-button">
-          ลองใหม่
+        <button
+          class="retry-button"
+          id="retryBtn"
+        >
+          🔄 ลองใหม่
         </button>
 
       </div>
     `;
 
 
+    // ====================
     // Retry Button
-    const retryButton =
-      document.getElementById("retry-button");
+    // ====================
+
+    const retryBtn =
+      document.getElementById("retryBtn");
 
 
-    retryButton.addEventListener(
+    retryBtn.addEventListener(
       "click",
-      fetchCountries
+      searchCountry
     );
 
   }
 
 
+  // ====================
+  // Finally
+  // ====================
+
   finally {
 
-    // ซ่อน Loading หลังจากทำงานเสร็จ
-    loading.style.display = "none";
+    loading.hidden = true;
+
+    searchBtn.disabled = false;
+
+    searchBtn.textContent = "ค้นหา";
 
   }
 
@@ -258,27 +176,88 @@ async function fetchCountries() {
 
 
 // ====================
-// Event Listeners
+// Display Country
 // ====================
 
-searchInput.addEventListener(
-  "input",
-  applyFilters
-);
+function displayCountry(country) {
 
-regionFilter.addEventListener(
-  "change",
-  applyFilters
-);
+  const name =
+    country.name || "ไม่ระบุ";
 
-sortSelect.addEventListener(
-  "change",
-  applyFilters
+  const region =
+    country.region || "ไม่ระบุ";
+
+  const population =
+    typeof country.population === "number"
+      ? country.population.toLocaleString()
+      : "ไม่ระบุ";
+
+
+  const flag =
+    country.flags?.png || "";
+
+
+  result.innerHTML = `
+    <div class="country-card">
+
+      ${
+        flag
+          ? `
+            <img
+              src="${flag}"
+              alt="ธงของ ${name}"
+            >
+          `
+          : `
+            <p>
+              🚩 No flag available
+            </p>
+          `
+      }
+
+      <h2>
+        ${name}
+      </h2>
+
+      <p>
+        🌍 Region:
+        ${region}
+      </p>
+
+      <p>
+        👥 Population:
+        ${population}
+      </p>
+
+    </div>
+  `;
+
+}
+
+
+// ====================
+// Search Button
+// ====================
+
+searchBtn.addEventListener(
+  "click",
+  searchCountry
 );
 
 
 // ====================
-// Start App
+// Enter Key
 // ====================
 
-fetchCountries();
+countryInput.addEventListener(
+  "keydown",
+  function (event) {
+
+    if (event.key === "Enter") {
+
+      searchCountry();
+
+    }
+
+  }
+);

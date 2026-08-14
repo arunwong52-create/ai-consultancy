@@ -1,65 +1,55 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Country Explorer</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+  <title>Country Explorer</title>
+
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+  <main class="container">
+
     <h1>🌍 Country Explorer</h1>
 
-    <div class="controls">
-
-        <input 
-            id="search-input"
-            type="text"
-            placeholder="ค้นหาประเทศ..."
-        >
-
-        <select id="region-filter">
-            <option value="all">ทุกทวีป</option>
-            <option value="Asia">Asia</option>
-            <option value="Europe">Europe</option>
-            <option value="Africa">Africa</option>
-            <option value="Americas">Americas</option>
-            <option value="Oceania">Oceania</option>
-        </select>
+    <p class="subtitle">
+      ค้นหาข้อมูลประเทศที่คุณสนใจ
+    </p>
 
 
-        <select id="sort-select">
-            <option value="default">
-                เรียงปกติ
-            </option>
+    <!-- Search -->
+    <div class="search-box">
 
-            <option value="name">
-                ชื่อ A-Z
-            </option>
+      <input
+        type="text"
+        id="countryInput"
+        placeholder="พิมพ์ชื่อประเทศ เช่น Thailand"
+        autocomplete="off"
+      >
 
-            <option value="population">
-                ประชากรมาก-น้อย
-            </option>
-
-        </select>
+      <button id="searchBtn">
+        ค้นหา
+      </button>
 
     </div>
 
 
-    <p id="loading">
-        Loading countries...
+    <!-- Loading -->
+    <p id="loading" class="loading" hidden>
+      🔄 กำลังโหลดข้อมูล...
     </p>
 
 
-    <p id="error"></p>
+    <!-- Result -->
+    <div id="result"></div>
+
+  </main>
 
 
-    <div id="country-container"></div>
-
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>
