@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Country Explorer</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <main class="container">
+
+    <h1>🌍 Country Explorer</h1>
+
+    <p class="subtitle">
+      ค้นหาข้อมูลประเทศที่คุณสนใจ
+    </p>
+
+
+    <!-- Search -->
+    <div class="search-box">
+
+      <input
+        type="text"
+        id="countryInput"
+        placeholder="พิมพ์ชื่อประเทศ เช่น Thailand"
+        autocomplete="off"
+      >
+
+      <button id="searchBtn">
+        ค้นหา
+      </button>
+
+    </div>
+
+
+    <!-- Loading -->
+    <p id="loading" class="loading" hidden>
+      🔄 กำลังโหลดข้อมูล...
+    </p>
+
+
+    <!-- Result -->
+    <div id="result"></div>
+
+  </main>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>

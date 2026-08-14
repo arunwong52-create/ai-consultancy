@@ -27,6 +27,9 @@ const menu = [
 
 const menuContainer = document.getElementById("menu-container");
 
+let searchText = "";
+let selectedCategory = "all";
+
 function displayMenu(data) {
 
   menuContainer.innerHTML = "";
@@ -35,17 +38,57 @@ function displayMenu(data) {
 
     const dish = data[i];
 
-    const cardHTML = `
-      <div class="dish-card">
-        <h3>${dish.name}</h3>
-        <p>ราคา: ${dish.price} บาท</p>
-        <p>หมวดหมู่: ${dish.category}</p>
-        <p>ความเผ็ด: ${dish.spicy ? "เผ็ด 🌶️" : "ไม่เผ็ด"}</p>
-      </div>
-    `;
+    // สร้าง card
+    const card = document.createElement("div");
+    card.classList.add("dish-card");
 
-    menuContainer.innerHTML += cardHTML;
+    // ชื่อเมนู
+    const title = document.createElement("h3");
+    title.textContent = dish.name;
+
+    // ราคา
+    const price = document.createElement("p");
+    price.textContent = `ราคา: ${dish.price} บาท`;
+
+    // หมวดหมู่
+    const category = document.createElement("p");
+    category.textContent = `หมวดหมู่: ${dish.category}`;
+
+    // ความเผ็ด
+    const spicy = document.createElement("p");
+    spicy.textContent = `ความเผ็ด: ${dish.spicy ? "เผ็ด 🌶️" : "ไม่เผ็ด"}`;
+
+    // ประกอบ card
+    card.appendChild(title);
+    card.appendChild(price);
+    card.appendChild(category);
+    card.appendChild(spicy);
+
+    // แสดงบนหน้าเว็บ
+    menuContainer.appendChild(card);
   }
+}
+
+// ====================
+// Update Menu
+// ====================
+
+function updateMenu() {
+
+  const filteredMenu = menu.filter(function(item) {
+
+    const matchCategory =
+      selectedCategory === "all" ||
+      item.category === selectedCategory;
+
+    const matchSearch =
+      searchText === "" ||
+      item.name.includes(searchText);
+
+    return matchCategory && matchSearch;
+  });
+
+  displayMenu(filteredMenu);
 }
 
 // แสดงเมนูทั้งหมดตอนเปิดเว็บ
@@ -61,20 +104,9 @@ buttons.forEach(function(button) {
 
   button.addEventListener("click", function() {
 
-    const selectedCategory = button.dataset.category;
+    selectedCategory = button.dataset.category;
 
-    if (selectedCategory === "all") {
-
-      displayMenu(menu);
-
-    } else {
-
-      const filteredMenu = menu.filter(function(item) {
-        return item.category === selectedCategory;
-      });
-
-      displayMenu(filteredMenu);
-    }
+    updateMenu();
 
   });
 
@@ -88,12 +120,8 @@ const searchInput = document.getElementById("search-input");
 
 searchInput.addEventListener("input", function() {
 
-  const searchText = searchInput.value;
+  searchText = searchInput.value;
 
-  const filteredMenu = menu.filter(function(item) {
-    return item.name.includes(searchText);
-  });
-
-  displayMenu(filteredMenu);
+  updateMenu();
 
 });
